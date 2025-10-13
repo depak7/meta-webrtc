@@ -5,7 +5,7 @@ export default function SipTest() {
   const [status, setStatus] = useState("Disconnected");
   const [incoming, setIncoming] = useState(null);
   const [active, setActive] = useState(null);
-  const [phoneNumber, setPhoneNumber] = useState("919751577309");
+  const [phoneNumber, setPhoneNumber] = useState("91(number here)");
   const [isConnecting, setIsConnecting] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [callDuration, setCallDuration] = useState("00:00");
