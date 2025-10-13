@@ -6,6 +6,7 @@ export default function SipTest() {
   const [incoming, setIncoming] = useState(null);
   const [active, setActive] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("919751577309");
+  const [isConnecting, setIsConnecting] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [callDuration, setCallDuration] = useState("00:00");
   const [audioDebugInfo, setAudioDebugInfo] = useState([]);
@@ -466,8 +467,10 @@ export default function SipTest() {
 
   const acceptCall = async () => {
     if (!incoming) return;
+    if (isConnecting) return;
 
     addDebugLog("📞 Accepting incoming call");
+    setIsConnecting(true);
     await initializeAudioContext();
 
     try {
@@ -488,6 +491,7 @@ export default function SipTest() {
         if (state === SessionState.Established) {
           addDebugLog("🎯 Incoming call established");
           setStatus("Connected");
+          setIsConnecting(false);
           
           // Multiple delayed audio setup attempts
           setTimeout(() => checkAndSetupAudio(incoming), 500);
@@ -497,6 +501,7 @@ export default function SipTest() {
         
         if (state === SessionState.Terminated) {
           addDebugLog("📞 Incoming call terminated");
+          setIsConnecting(false);
           cleanup();
         }
       });
@@ -508,10 +513,12 @@ export default function SipTest() {
     } catch (error) {
       addDebugLog(`❌ Error accepting call: ${error.message}`);
       setStatus("Call failed");
+      setIsConnecting(false);
     }
   };
 
   const makeOutboundCall = async () => {
+    if (isConnecting) return;
     if (!phoneNumber.trim()) {
       alert("Please enter a phone number");
       return;
@@ -522,6 +529,7 @@ export default function SipTest() {
       return;
     }
   
+    setIsConnecting(true);
     await initializeAudioContext();
   
     const targetURI = new URI(
@@ -553,6 +561,7 @@ export default function SipTest() {
         setStatus("In call");
         setLastError(null); // Clear any previous errors
         addDebugLog("🎯 Outbound call established - setting up audio");
+        setIsConnecting(false);
         
         // CRITICAL: Wait a bit longer for outbound calls before audio setup
         setTimeout(() => {
@@ -568,6 +577,7 @@ export default function SipTest() {
 
       if (state === SessionState.Terminated) {
         addDebugLog("📞 Outbound call terminated");
+        setIsConnecting(false);
         
         // Check if this is a failure termination
         const sessionDescriptionHandler = inviter.sessionDescriptionHandler;
@@ -615,12 +625,14 @@ export default function SipTest() {
         });
         
         setStatus("Call failed");
+        setIsConnecting(false);
         cleanup();
       },
       
       onCancel: () => {
         addDebugLog("📞 Call cancelled via delegate");
         setStatus("Call cancelled");
+        setIsConnecting(false);
         cleanup();
       }
     };
@@ -658,6 +670,7 @@ export default function SipTest() {
       }
       
       setStatus("Call failed");
+      setIsConnecting(false);
       cleanup();
     }
   };
@@ -667,6 +680,7 @@ export default function SipTest() {
     setIncoming(null);
     setStatus("Registered");
     setRtpStats({});
+    setIsConnecting(false);
     
     if (statsIntervalRef.current) {
       clearInterval(statsIntervalRef.current);
@@ -874,12 +888,14 @@ export default function SipTest() {
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="1234567890"
                   className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  disabled={isConnecting}
                 />
                 <button
                   onClick={makeOutboundCall}
-                  className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors"
+                  className={`bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors ${isConnecting ? 'opacity-60 cursor-not-allowed' : ''}`}
+                  disabled={isConnecting}
                 >
-                  📞 Call
+                  {isConnecting ? '⏳ Calling...' : '📞 Call'}
                 </button>
               </div>
             </div>
@@ -891,9 +907,10 @@ export default function SipTest() {
               <div className="flex space-x-2">
                 <button 
                   onClick={acceptCall}
-                  className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors"
+                  className={`flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors ${isConnecting ? 'opacity-60 cursor-not-allowed' : ''}`}
+                  disabled={isConnecting}
                 >
-                  ✅ Accept
+                  {isConnecting ? '⏳ Connecting...' : '✅ Accept'}
                 </button>
                 <button 
                   onClick={() => {
