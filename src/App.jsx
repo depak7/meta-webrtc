@@ -1,22 +1,12 @@
-import { useState } from 'react'
 import './App.css'
-import SipClient from './components/SipClient'
-import MetaSipClient from './components/BusinessInitiatedCalls'
-import WhatsAppCaller from './components/WhasappCaller'
-import InboundWhatsAppCaller from './components/InboundWhatsAppCaller'
-import SSEInboundWhatsAppCaller from './components/SseInbound'
+
+import SipTest from './components/SipTestForLogs'
 
 function App() {
 
   return (
     <>
-      {/* <SipClient /> */}
-      {/* <MetaSipClient/> */}
-      {/* <WhatsAppCaller/>< */}
-      {/* <InboundWhatsAppCaller/>
-     */}
-     <SSEInboundWhatsAppCaller/>
-      
+      <SipTest/>      
     </>
   ) 
 }
