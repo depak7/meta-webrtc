@@ -1033,7 +1033,7 @@ export default function SipTest() {
           )}
 
           {/* Debug Logs */}
-          <div className="bg-gray-50 p-4 rounded-lg">
+          {/* <div className="bg-gray-50 p-4 rounded-lg">
             <h3 className="text-sm font-medium text-gray-700 mb-2">🐛 Debug Log</h3>
             <div className="bg-black text-green-400 p-3 rounded text-xs font-mono h-64 overflow-y-auto">
               {audioDebugInfo.map((log, index) => (
@@ -1052,10 +1052,10 @@ export default function SipTest() {
             >
               Clear Logs
             </button>
-          </div>
+          </div> */}
 
           {/* Quick Audio Fixes */}
-          <div className="bg-orange-50 p-4 rounded-lg">
+          {/* <div className="bg-orange-50 p-4 rounded-lg">
             <h3 className="text-sm font-medium text-orange-800 mb-2">🚨 Quick Audio Fixes</h3>
             <div className="space-y-2 text-xs">
               <div className="mb-2 text-orange-700">If you can't hear audio on outbound calls:</div>
@@ -1099,10 +1099,10 @@ export default function SipTest() {
                 🔄 Reset Audio Context
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* System Info */}
-          <div className="bg-yellow-50 p-4 rounded-lg">
+          {/* <div className="bg-yellow-50 p-4 rounded-lg">
             <h3 className="text-sm font-medium text-yellow-800 mb-2">ℹ️ System Info</h3>
             <div className="text-xs space-y-1 text-yellow-700">
               <div>WebRTC Endpoint: 919538099928@sipserver.kapturecrm.com</div>
@@ -1116,10 +1116,10 @@ export default function SipTest() {
                 navigator.userAgent.includes('Safari') ? 'Safari' : 'Other'}</div>
               <div>Secure Context: {window.isSecureContext ? '✅ Yes' : '❌ No'}</div>
             </div>
-          </div>
+          </div> */}
 
           {/* Audio Troubleshooting */}
-          <div className="bg-purple-50 p-4 rounded-lg">
+          {/* <div className="bg-purple-50 p-4 rounded-lg">
             <h3 className="text-sm font-medium text-purple-800 mb-2">🔧 Audio Troubleshooting</h3>
             <div className="space-y-2">
               <button
@@ -1212,12 +1212,12 @@ export default function SipTest() {
                 🔬 Deep Audio Inspection
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Browser-specific Tips */}
           <div className="bg-indigo-50 p-4 rounded-lg">
-            <h3 className="text-sm font-medium text-indigo-800 mb-2">💡 Browser Tips</h3>
-            <div className="text-xs text-indigo-700 space-y-1">
+            {/* <h3 className="text-sm font-medium text-indigo-800 mb-2">💡 Browser Tips</h3> */}
+            {/* <div className="text-xs text-indigo-700 space-y-1">
               <div><strong>Chrome/Edge:</strong> Check site permissions for microphone/sound</div>
               <div><strong>Firefox:</strong> May need manual play button click</div>
               <div><strong>Safari:</strong> Requires user interaction for audio</div>
@@ -1225,13 +1225,13 @@ export default function SipTest() {
               {!window.isSecureContext && (
                 <div className="text-red-600 font-bold">⚠️ Non-secure context may cause audio issues!</div>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
 
       {/* User Interaction Prompt */}
-      {active && (
+      {/* {active && (
         <div className="mt-6 text-center">
           <div className="inline-block bg-blue-100 border border-blue-300 rounded-lg p-3">
             <div className="text-blue-800 text-sm">
@@ -1240,7 +1240,7 @@ export default function SipTest() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
